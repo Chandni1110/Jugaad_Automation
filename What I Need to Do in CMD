@@ -1,0 +1,75 @@
+What I Need To DO In CMD
+
+Summary of What You Need to Do in the Terminal:
+Step 2: Create a project folder and open the terminal/command prompt.
+Step 3: Run npm init -y to initialize the project (no need to open Node.js separately).
+Step 4: Run npm install selenium-webdriver to install Selenium, and npm install chromedriver (or geckodriver for Firefox).
+Step 5: Write your test script in Sublime Text.
+Step 6: Use node test.js in the terminal to run the script.
+You don’t need to open Node.js for this. Everything is done from the terminal. Node.js is being used behind the scenes when you run npm commands or node test.js.
+
+Let me know if you need further clarification!
+
+===========================================================
+How it works:
+
+1. 	Developer pushes code to the repository (e.g., GitHub, GitLab).
+2.	The CI tool detects the code change and triggers the automated tests.
+3.	The tests run (either locally on your machines or on cloud services like BrowserStack).
+4. 	The CI tool collects results, and developers get feedback on whether their changes broke any functionality.
+===============================================
+Step 3: Set Up GitHub Actions
+Create GitHub Actions directory: In your project, create a .github/workflows directory to store your workflow configuration:
+
+bash
+Copy
+mkdir -p .github/workflows
+Create a new GitHub Actions workflow YAML file: Inside .github/workflows, create a file named selenium-tests.yml:
+
+bash
+Copy
+touch .github/workflows/selenium-tests.yml
+Add the GitHub Actions workflow configuration: Open the selenium-tests.yml file and add the following content:
+
+yaml
+Copy
+name: Run Selenium Tests
+
+on:
+  push:
+    branches:
+      - main  # Trigger this action on pushing to the 'main' branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests targeting the 'main' branch
+
+jobs:
+  selenium-tests:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner from GitHub Actions
+
+    steps:
+      # Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Specify Node.js version to use
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run the Selenium tests
+      - name: Run Selenium Tests
+        run: node test.js
+Commit and push the workflow to your GitHub repository:
+
+Add, commit, and push the changes:
+bash
+Copy
+git add .github/workflows/selenium-tests.yml
+git commit -m "Add GitHub Actions workflow for Selenium tests"
+git push origin main
