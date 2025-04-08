@@ -12,7 +12,7 @@
   "dependencies": {
     "chromedriver": "^133.0.3",
     "geckodriver": "^5.0.0",
-    "selenium-webdriver": "^4.29.0",
+    "selenium-webdriver": "^4.30.0",
     "xlsx": "^0.18.5"
   }
 }

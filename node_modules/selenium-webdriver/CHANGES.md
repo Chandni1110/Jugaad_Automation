@@ -1,3 +1,10 @@
+## 4.30.0
+
+- [bidi] fix chrome and firefox test for CI RBE (#15405)
+- [cdp] add support for 134 and remove 131
+- [cdp] remove support for v85 since no longer required by Firefox
+- [bidi] implement permissions module commands in JS (#15304)
+
 ## 4.29.0
 
 - Add CDP for Chrome 133 and remove 130

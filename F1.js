@@ -1,72 +1,53 @@
 const { Builder, By, until, Key } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const xlsx = require('xlsx');
-const fs = require('fs');
-const path = require('path');
-
+const fs = require("fs");
+const path = require("path");
+const xlsx = require("xlsx");
 
 (async function runTest() {
-    let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
+    let driver, newDriver;
 
     try {
+        // STEP 1: MAIN STAGE ENVIRONMENT
+        driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
         await driver.manage().window().maximize();
-        
-        // Login to Main Stage
         console.log("🚀 Opening Main Stage website...");
         await driver.get("https://main.stage-smartflow.com/m_user_login/agency/2/sign_in");
+
         await loginToMainStage(driver);
+        const mainAppNumbers = await goToApprovedTab(driver, "Main Stage");  // Should return a list of application numbers
 
-        // Go to Approved Tab on Main Stage
-        let mainStageData = await goToApprovedTab(driver, "Main Stage");
+        for (const appNumber of mainAppNumbers) {
+            console.log(`📥 Extracting Main Stage data for ${appNumber}`);
+            const mainStageData = await extractFormData(driver, "Main Stage", appNumber);
 
-        // Login to Production
-        console.log("🚀 Opening Production website...");
-        await driver.executeScript("window.open('about:blank', '_blank');");
-        let tabs = await driver.getAllWindowHandles();
-        await driver.switchTo().window(tabs[1]);
-        await driver.get("https://auth.vebuin.com/auth/realms/smartflow/protocol/openid-connect/auth?client_id=smartflow_public&redirect_uri=https%3A%2F%2Fsmartflow.vebuin.com%2Fm_user_login%2Fagency%2F3%2Fsign_in%3Fclear");
-        await loginToProduction(driver);
-
-        // Go to Approved Tab on Production
-        let productionData = await goToApprovedTab(driver, "Production");
-
-        try {
-            // Debugging log to ensure data is correct before comparison
-            if (!mainStageData || !productionData) {
-                console.error("❌ Main Stage or Production data is missing.");
-                return;
-            }
-            console.log("Main Stage Data:", mainStageData);
-            console.log("Production Data:", productionData);
-
-            // Check if mainStageData and productionData are arrays and have data
-            if (!Array.isArray(mainStageData) || !Array.isArray(productionData)) {
-                console.error("❌ Invalid data format. Both datasets should be arrays.");
-                return;
-            }
-
-            // Compare data from Main Stage and Production
-            let comparisonResults = compareData(mainStageData, productionData, ["0001", "0002"]); // Adjust with the app numbers you are comparing
-
-            // If comparison results are empty, log a warning
-            if (comparisonResults.length === 0) {
-                console.warn("⚠️ No comparison results found.");
-            }
-
-            // Save comparison results to Excel file for each app number
-            comparisonResults.forEach(result => {
-                exportToExcel(result.comparisonResults, result.appNumber); // Save each comparison result as a separate file
-            });
-            console.log("✅ Comparison results saved to Excel!");
-
-        } catch (error) {
-            console.error("❌ Error during comparison or export:", error);
+            console.log(`💾 Saving Main Stage data for ${appNumber}`);
+            await saveAndCompare(appNumber, "Main Stage", mainStageData); // This saves, compares, and exports if Production data exists
         }
 
-    } catch (error) {
-        console.error("❌ Error:", error);
+        // STEP 2: PRODUCTION ENVIRONMENT
+        newDriver = await new Builder().forBrowser('chrome').build();
+        await newDriver.manage().window().maximize();
+        console.log("🚀 Opening Production website...");
+        await newDriver.get('https://main.stage-smartflow.com/m_user_login/agency/2/sign_in'); // <- Use correct Prod URL
+
+        await newDriver.wait(until.elementLocated(By.tagName('body')), 10000);
+        await loginToProduction(newDriver);
+        const prodAppNumbers = await goToApprovedTab(newDriver, "Production"); // Should return list of application numbers
+
+        for (const appNumber of prodAppNumbers) {
+            console.log(`📥 Extracting Production data for ${appNumber}`);
+            const prodData = await extractFormData(newDriver, "Production", appNumber);
+
+            console.log(`💾 Saving Production data for ${appNumber}`);
+            await saveAndCompare(appNumber, "Production", prodData); // This saves, compares, and exports if Main Stage data exists
+        }
+
+    } catch (err) {
+        console.error("❌ Error in runTest:", err);
     } finally {
-        await driver.quit();
+        if (driver) await driver.quit();
+        if (newDriver) await newDriver.quit();
     }
 })();
 
@@ -75,10 +56,10 @@ async function loginToMainStage(driver) {
     await driver.wait(until.elementLocated(By.name('username')), 10000);
     let usernameField = await driver.findElement(By.name('username'));
     await usernameField.clear();
-    await usernameField.sendKeys('thinkbiz001+01@gmail.com');
+    await usernameField.sendKeys('yamamoto_m@yopmail.com');
     let passwordField = await driver.findElement(By.name('password'));
     await passwordField.clear();
-    await passwordField.sendKeys('123123123');
+    await passwordField.sendKeys('d2Ak5CMT1DNC41!');
     await driver.findElement(By.className('submit')).click();
     await driver.wait(until.urlContains('dashboard'), 10000);
     console.log("✅ Logged in to Main Stage!");
@@ -89,16 +70,17 @@ async function loginToProduction(driver) {
     await driver.wait(until.elementLocated(By.id('username')), 10000);
     let usernameField = await driver.findElement(By.id('username'));
     await usernameField.clear();
-    await usernameField.sendKeys('chandni_pro_1@yopmail.com');
+    await usernameField.sendKeys('yamamoto_m@yopmail.com');
     let passwordField = await driver.findElement(By.id('password'));
     await passwordField.clear();
-    await passwordField.sendKeys('123123123');
+    await passwordField.sendKeys('d2Ak5CMT1DNC41!');
     let loginButton = await driver.wait(until.elementLocated(By.className("submit")), 10000);
     await driver.executeScript("arguments[0].click();", loginButton);
     await driver.sleep(5000);
     console.log("✅ Logged in to Production!");
 }
 
+// Click on "All Items" & "Approved Tab" link
 async function goToApprovedTab(driver, websiteName) {
     console.log(`📌 Navigating to All Items on ${websiteName}...`);
     let element = await driver.wait(until.elementLocated(By.css('[href="#/app/dashboard/items/3/"]')), 10000);
@@ -109,7 +91,7 @@ async function goToApprovedTab(driver, websiteName) {
     console.log(`✅ Navigated to All Items on ${websiteName}`);
     
     try {
-        let elementApproved = await driver.wait(until.elementLocated(By.xpath('//a/span[text()="Approved"]')), 15000);
+        let elementApproved = await driver.wait(until.elementLocated(By.xpath('//a/span[text()="完了"]')), 15000);
         await driver.wait(until.elementIsVisible(elementApproved), 5000);  // Ensure visibility
         await driver.executeScript('arguments[0].click();', elementApproved);
         console.log(`✅ Approved tab clicked on ${websiteName}`);
@@ -118,18 +100,27 @@ async function goToApprovedTab(driver, websiteName) {
     }
     await driver.sleep(3000);
 
-    let applicationNumbers = ["0001", "0002"];  // You can modify the application numbers as needed
+    let applicationNumbers = ["0155", "0156"];  // You can modify the application numbers as needed
     let formData = [];
 
     // Process applications and download the data
-    await processApplicationsAndDownloadFiles(driver, applicationNumbers);
+    await processApplicationsAndDownloadFiles(driver, applicationNumbers, websiteName);
 
     return formData;
 }
 
-async function processApplicationsAndDownloadFiles(driver, applicationNumbers) {
+
+// Application Numbers and Data Storage
+async function processApplicationsAndDownloadFiles(driver, applicationNumbers, websiteName) {
+    // ✅ Ensure output folder exists
+    const outputDir = path.join(__dirname, 'output');
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+    }
+
     // Loop over each application number
     for (let appNumber of applicationNumbers) {
+
         console.log(`🔍 Searching for application: ${appNumber}`);
 
         // Perform search
@@ -170,10 +161,12 @@ async function processApplicationsAndDownloadFiles(driver, applicationNumbers) {
         console.log("✅ Form loaded successfully");
 
         // Extract form data
-        let formData = await extractFormData(driver);
+        let formData = await extractFormData(driver, websiteName, appNumber);
+        await saveAndCompare(appNumber, websiteName, formData);
+        console.log(`📌 Extracted Data: ${websiteName} ${appNumber}`, formData);
 
-        // Now save the extracted data to a file with the application number
-        // Removed saveFormDataToFile function call
+        // Save and compare logic
+        await saveAndCompare(appNumber, websiteName, formData);
 
         // Close the current tab and return to the main tab
         await driver.close();
@@ -183,16 +176,19 @@ async function processApplicationsAndDownloadFiles(driver, applicationNumbers) {
         await driver.sleep(3000);
     }
 }
+    
+
 
 // ✅ Extract form data
-async function extractFormData(driver) {
+async function extractFormData(driver, websiteName, appNumber) {
     let valuesAndLabels = await driver.executeScript(() => {
         let result = [];
-        const seen = new Set(); // To track unique label-value pairs
+        const seen = new Set();
+        const radioGroups = new Map();
 
-        const inputElements = document.querySelectorAll('input.form-control, textarea.form-control, select.form-control');
+        const formElements = document.querySelectorAll('input.form-control, textarea.form-control, select.form-control, input[type="checkbox"], input[type="radio"]');
 
-        inputElements.forEach(input => {
+        formElements.forEach(input => {
             let label = 'No label';
             const labelFor = document.querySelector(`label[for="${input.id}"]`);
             if (labelFor) {
@@ -216,102 +212,170 @@ async function extractFormData(driver) {
                 }
             }
 
-            const value = input.value.trim() || 'No value';
-            if (label === 'No label' || value === 'No value') return;
-            if (seen.has(label + value)) return;
+            let value = "No value";
 
-            result.push({ label, value });
-            seen.add(label + value);
+            if (input.type === "checkbox") {
+                let groupLabelElement = input.closest('.col-md-12')?.querySelector('label.jd-label');
+                let groupLabel = groupLabelElement ? groupLabelElement.innerText.trim() : "";
+
+                if (groupLabel) {
+                    value = input.checked ? "Checked" : "Unchecked";
+                    if (!seen.has(groupLabel + value)) {
+                        result.push({ label: groupLabel, value });
+                        seen.add(groupLabel + value);
+                    }
+                }
+            } else if (input.type === "radio") {
+                let groupLabelElement = input.closest('.col-md-12')?.querySelector('label.jd-label');
+                let groupLabel = groupLabelElement ? groupLabelElement.innerText.trim() : "";
+
+                if (groupLabel && !radioGroups.has(input.name)) {
+                    document.querySelectorAll(`input[name="${input.name}"]`).forEach(radio => {
+                        let optionLabel = radio.parentElement?.textContent.trim() || radio.value.trim() || "No Option Label";
+                        let value = radio.checked ? `Selected: ${optionLabel}` : `Not Selected: ${optionLabel}`;
+
+                        if (!seen.has(groupLabel + value)) {
+                            result.push({ label: groupLabel, value });
+                            seen.add(groupLabel + value);
+                        }
+                    });
+
+                    radioGroups.set(input.name, true);
+                }
+            } else if (input.tagName === "SELECT") {
+                value = input.options[input.selectedIndex]?.text.trim() || "No value";
+            } else {
+                value = input.value.trim() || "No value";
+            }
+
+            if (label !== 'No label' && value !== 'No value' && !seen.has(label + value)) {
+                result.push({ label, value });
+                seen.add(label + value);
+            }
         });
 
         return result;
     });
 
-    console.log("📌 Extracted Data:", valuesAndLabels);
+//    console.log(`📌 ${websiteName} Extracted Data: ${appNumber}`, valuesAndLabels);
     return valuesAndLabels;
 }
 
 
-// // Combine the data from both textboxes/textareas and labels extraction
-//     let combinedData = [...valuesAndLabels, ...extractedData];
+// Util: Save data to JSON file
+function saveComparisonToFile(appNumber, mainData, prodData, comparisonResults) {
+    const outputDir = path.join(__dirname, 'output');
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+    }
 
-//     // Remove duplicates based on label-value pairs
-//     let uniqueData = [];
-//     combinedData.forEach(item => {
-//         if (!uniqueData.some(existingItem => existingItem.label === item.label && existingItem.value === item.value)) {
-//             uniqueData.push(item);
-//         }
-//     });
+    const filePath = path.join(outputDir, `${appNumber}.json`);
 
-//     console.log("📌 Combined Extracted Data (Filtered):", uniqueData);
+    const dataToSave = {
+        "Main Stage Data": mainData,
+        "Production Data": prodData,
+        "Comparison Results": comparisonResults
+    };
 
-//     return uniqueData;
+    fs.writeFileSync(filePath, JSON.stringify(combinedData, null, 2), 'utf8');
+    console.log(`✅ Comparison saved to file: ${filePath}`);
+}
 
 
-// ✅ Function to Compare Data from Both Websites
-function compareData(data1, data2) {
-    let comparisonResults = [];
-    let allLabels = new Set([...data1.map(d => d.label), ...data2.map(d => d.label)]);
- 
-    allLabels.forEach(label => {
-        let entry1 = data1.find(d => d.label === label);
-        let entry2 = data2.find(d => d.label === label);
- 
-        let value1 = entry1 ? entry1.value : "Not Found";
-        let value2 = entry2 ? entry2.value : "Not Found";
- 
-        let labelMatch = entry1 && entry2 ? "✅ Matched" : "❌ Mismatch";
-        let valueMatch = value1 === value2 ? "✅ Matched" : "❌ Mismatch";
- 
-        comparisonResults.push({
-            "Main Stage - Label": entry1 ? entry1.label : "Not Found",
+// 🔍 Compare two sets of form data
+function compareFormData(mainData, prodData) {
+    const allLabels = new Set([
+        ...mainData.map(item => item.label),
+        ...prodData.map(item => item.label),
+    ]);
+
+    let results = [];
+
+    for (let label of allLabels) {
+        const entry1 = mainData.find(item => item.label === label);
+        const entry2 = prodData.find(item => item.label === label);
+
+        const label1 = entry1 ? entry1.label : "Not Found";
+        const value1 = entry1 ? entry1.value : "Not Found";
+
+        const label2 = entry2 ? entry2.label : "Not Found";
+        const value2 = entry2 ? entry2.value : "Not Found";
+
+        const labelMatch = label1 === label2 ? "✅ Matched" : "❌ Mismatch";
+        const valueMatch = value1 === value2 ? "✅ Matched" : "❌ Mismatch";
+
+        results.push({
+            "Main Stage - Label": label1,
             "Main Stage - Value": value1,
-            "Production - Label": entry2 ? entry2.label : "Not Found",
+            "Production - Label": label2,
             "Production - Value": value2,
             "Label Match": labelMatch,
             "Value Match": valueMatch
         });
-    });
- 
-    // Print Comparison Results to Console
-    console.table(comparisonResults);
- 
-    return comparisonResults;
+    }
+
+    return results;
 }
 
-// ✅ Function to Export Data to Excel
-
-function exportToExcel(mainStageData, productionData, comparisonResults) {
+// 📤 Export the data to Excel
+function exportToExcel(appNumber, mainStageData, productionData, comparisonResults) {
     const wb = xlsx.utils.book_new();
 
-    // Convert JSON data to worksheets
     const ws1 = xlsx.utils.json_to_sheet(mainStageData);
     const ws2 = xlsx.utils.json_to_sheet(productionData);
     const ws3 = xlsx.utils.json_to_sheet(comparisonResults);
 
-    // Append worksheets to the workbook
-    xlsx.utils.book_append_sheet(wb, ws1, 'Main Stage');
-    xlsx.utils.book_append_sheet(wb, ws2, 'Production');
-    xlsx.utils.book_append_sheet(wb, ws3, 'Comparison Results');
+    xlsx.utils.book_append_sheet(wb, ws1, "Main Stage");
+    xlsx.utils.book_append_sheet(wb, ws2, "Production");
+    xlsx.utils.book_append_sheet(wb, ws3, "Comparison Results");
 
-    // Save Excel file with dynamic timestamp
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const fileName = `comparison_results_${timestamp}.xlsx`;
-    const filePath = path.resolve(__dirname, fileName); // Ensure absolute path
-
-    //console.log(mainStageData, productionData, comparisonResults);
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const fileName = `${appNumber}_comparison_${timestamp}.xlsx`;
+    const outputDir = path.join(__dirname, 'output');
+    const filePath = path.join(outputDir, fileName);
 
     try {
         xlsx.writeFile(wb, filePath);
-        
         console.log(`✅ Comparison results saved to Excel!`);
-        console.log(`📂 Excel file path: ${filePath}`);  // <-- Show file path here
-
+        console.log(`📂 Excel file path: ${filePath}`);
     } catch (error) {
         console.error(`❌ Failed to save Excel file:`, error);
     }
 }
 
+// 💾 Save data and trigger comparison if both sides are present
+async function saveAndCompare(appNumber, websiteName, formData) {
+    const outputDir = path.join(__dirname, 'output');
+    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
+
+    const jsonPath = path.join(outputDir, `${appNumber}.json`);
+    let combinedData = {};
+
+    // Load existing JSON if exists
+    if (fs.existsSync(jsonPath)) {
+        combinedData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    }
+
+    // Add current environment's data
+    combinedData[websiteName] = formData;
+
+    // Save updated JSON
+    fs.writeFileSync(jsonPath, JSON.stringify(combinedData, null, 2), 'utf8');
+    console.log(`💾 Saved ${websiteName} data for ${appNumber} to JSON`);
+
+    // Compare & export only if both environments are present
+    if (combinedData["Main Stage"] && combinedData["Production"]) {
+        const mainStageData = combinedData["Main Stage"];
+        const productionData = combinedData["Production"];
+        const comparisonResults = compareFormData(mainStageData, productionData);
+
+        exportToExcel(appNumber, mainStageData, productionData, comparisonResults);
+    }
+        console.log(`🔧 Running saveAndCompare for App #${appNumber} from ${websiteName}`);
+
+}
+
+module.exports = { saveAndCompare };
 
 
 

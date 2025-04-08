@@ -1,0 +1,548 @@
+{
+  "undefined": [
+    {
+      "label": "テキストデータを入力してください Text",
+      "value": "値引額の記載は不要です"
+    },
+    {
+      "label": "番号を入力してください Number",
+      "value": "125400"
+    },
+    {
+      "label": "メールアドレスを入力してください Email",
+      "value": "milind@vebuin.com"
+    },
+    {
+      "label": "URL",
+      "value": "https://www.tanoshiijapanese.com/home/"
+    },
+    {
+      "label": "katakana",
+      "value": "ホウラキテンルヤハルシャマヒハツメチロヌハハハガワブンパダイノ"
+    },
+    {
+      "label": "Hiragana",
+      "value": "ひらがな"
+    },
+    {
+      "label": "Half width input",
+      "value": "ｶﾀｶﾊﾞ"
+    },
+    {
+      "label": "Half width katakana",
+      "value": "ｶﾀｶﾊﾞ"
+    },
+    {
+      "label": "テキスト",
+      "value": "報ら期店ルヤ春車マヒハ詰専価チロヌハ母川文ぱ第野ヤヘハサ険通城アテ退緒南こぽたド田共よかこょ徹遺ツ器販かた暮働ぴのッ赤部偉塔履弓ド。85桂ケニメ学由ヘソトミ西望ぱっつ三経モヨレ作写前のごこ朝済はにじ世真ス運映ま面水てわべ意革条宿執折ゅぞ。円ヤフ目安12矢う理表ヌカヱソ彰25約エサロモ延試じに般上対ごみ意89物いた球問ぼをすっ際協スタ子力み東上ヒワホユ予川だなさ功査リく。"
+    },
+    {
+      "label": "詳細を入力してください Details",
+      "value": "報ら期店ルヤ春車マヒハ詰専価チロヌハ母川文ぱ第野ヤヘハサ険通城アテ退緒南こぽたド田共よかこょ徹遺ツ器販かた暮働ぴのッ赤部偉塔履弓ド。85桂ケニメ学由ヘソトミ西望ぱっつ三経モヨレ作写前のごこ朝済はにじ世真ス運映ま面水てわべ意革条宿執折ゅぞ。円ヤフ目安12矢う理表ヌカヱソ彰25約エサロモ延試じに般上対ごみ意89物いた球問ぼをすっ際協スタ子力み東上ヒワホユ予川だなさ功査リく。"
+    },
+    {
+      "label": "チェックボックス",
+      "value": "Checked"
+    },
+    {
+      "label": "第一",
+      "value": "Checked"
+    },
+    {
+      "label": "チェックボックス",
+      "value": "Unchecked"
+    },
+    {
+      "label": "第二",
+      "value": "Unchecked"
+    },
+    {
+      "label": "第三",
+      "value": "Checked"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Not Selected: 第一"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Not Selected: 第二"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Selected: 第三"
+    },
+    {
+      "label": "プルダウン",
+      "value": "第二"
+    },
+    {
+      "label": "日付",
+      "value": "2025/02/12"
+    },
+    {
+      "label": "yyyy/MM/dd hh:mm a",
+      "value": "2025/02/12 10:00 AM"
+    },
+    {
+      "label": "数値を入力",
+      "value": "125,400"
+    },
+    {
+      "label": "数値を入力",
+      "value": "100"
+    },
+    {
+      "label": "汎用データテーブル設定 - ヴェンダー　マスター",
+      "value": "6ヶ月契約"
+    },
+    {
+      "label": "社員ID",
+      "value": "100025"
+    },
+    {
+      "label": "社員名",
+      "value": "ﾊﾟﾃﾙ ﾐﾘﾝﾄﾞ"
+    },
+    {
+      "label": "役職",
+      "value": "副課長"
+    },
+    {
+      "label": "所属",
+      "value": "山根エリア"
+    },
+    {
+      "label": "姓",
+      "value": "ぱテル"
+    },
+    {
+      "label": "名",
+      "value": "ミリンド"
+    },
+    {
+      "label": "姓(カナ)",
+      "value": "パテル"
+    },
+    {
+      "label": "名(カナ)",
+      "value": "ミリンド"
+    },
+    {
+      "label": "生年月日",
+      "value": "1991/08/07"
+    },
+    {
+      "label": "年齢",
+      "value": "33"
+    },
+    {
+      "label": "連絡先(TEL)",
+      "value": "020-1291-231"
+    },
+    {
+      "label": "連絡先(固定電話)",
+      "value": "070-904-0250"
+    },
+    {
+      "label": "Email",
+      "value": "66.milind@gmail.com"
+    },
+    {
+      "label": "確認用(Email)",
+      "value": "66.milind@gmail.com"
+    },
+    {
+      "label": "郵便番号",
+      "value": "305-0033"
+    },
+    {
+      "label": "都道府県",
+      "value": "茨城県"
+    },
+    {
+      "label": "市区町村",
+      "value": "つくば市"
+    },
+    {
+      "label": "丁目番地",
+      "value": "東新井34−6"
+    },
+    {
+      "label": "建物名（マンション、アパート）",
+      "value": "グリンパラスKOKI"
+    },
+    {
+      "label": "住所",
+      "value": "305-0033,\n茨城県, つくば市, 東新井34−6, グリンパラスKOKI"
+    },
+    {
+      "label": "ステップを選択してください",
+      "value": "差し戻すステップを選択してください"
+    }
+  ],
+  "Main Stage": [
+    {
+      "label": "テキストデータを入力してください Text",
+      "value": "値引額の記載は不要です"
+    },
+    {
+      "label": "番号を入力してください Number",
+      "value": "125400"
+    },
+    {
+      "label": "メールアドレスを入力してください Email",
+      "value": "milind@vebuin.com"
+    },
+    {
+      "label": "URL",
+      "value": "https://www.tanoshiijapanese.com/home/"
+    },
+    {
+      "label": "katakana",
+      "value": "ホウラキテンルヤハルシャマヒハツメチロヌハハハガワブンパダイノ"
+    },
+    {
+      "label": "Hiragana",
+      "value": "ひらがな"
+    },
+    {
+      "label": "Half width input",
+      "value": "ｶﾀｶﾊﾞ"
+    },
+    {
+      "label": "Half width katakana",
+      "value": "ｶﾀｶﾊﾞ"
+    },
+    {
+      "label": "テキスト",
+      "value": "報ら期店ルヤ春車マヒハ詰専価チロヌハ母川文ぱ第野ヤヘハサ険通城アテ退緒南こぽたド田共よかこょ徹遺ツ器販かた暮働ぴのッ赤部偉塔履弓ド。85桂ケニメ学由ヘソトミ西望ぱっつ三経モヨレ作写前のごこ朝済はにじ世真ス運映ま面水てわべ意革条宿執折ゅぞ。円ヤフ目安12矢う理表ヌカヱソ彰25約エサロモ延試じに般上対ごみ意89物いた球問ぼをすっ際協スタ子力み東上ヒワホユ予川だなさ功査リく。"
+    },
+    {
+      "label": "詳細を入力してください Details",
+      "value": "報ら期店ルヤ春車マヒハ詰専価チロヌハ母川文ぱ第野ヤヘハサ険通城アテ退緒南こぽたド田共よかこょ徹遺ツ器販かた暮働ぴのッ赤部偉塔履弓ド。85桂ケニメ学由ヘソトミ西望ぱっつ三経モヨレ作写前のごこ朝済はにじ世真ス運映ま面水てわべ意革条宿執折ゅぞ。円ヤフ目安12矢う理表ヌカヱソ彰25約エサロモ延試じに般上対ごみ意89物いた球問ぼをすっ際協スタ子力み東上ヒワホユ予川だなさ功査リく。"
+    },
+    {
+      "label": "チェックボックス",
+      "value": "Checked"
+    },
+    {
+      "label": "第一",
+      "value": "Checked"
+    },
+    {
+      "label": "チェックボックス",
+      "value": "Unchecked"
+    },
+    {
+      "label": "第二",
+      "value": "Unchecked"
+    },
+    {
+      "label": "第三",
+      "value": "Checked"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Not Selected: 第一"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Not Selected: 第二"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Selected: 第三"
+    },
+    {
+      "label": "プルダウン",
+      "value": "第二"
+    },
+    {
+      "label": "日付",
+      "value": "2025/02/12"
+    },
+    {
+      "label": "yyyy/MM/dd hh:mm a",
+      "value": "2025/02/12 10:00 AM"
+    },
+    {
+      "label": "数値を入力",
+      "value": "125,400"
+    },
+    {
+      "label": "数値を入力",
+      "value": "100"
+    },
+    {
+      "label": "汎用データテーブル設定 - ヴェンダー　マスター",
+      "value": "6ヶ月契約"
+    },
+    {
+      "label": "社員ID",
+      "value": "100025"
+    },
+    {
+      "label": "社員名",
+      "value": "ﾊﾟﾃﾙ ﾐﾘﾝﾄﾞ"
+    },
+    {
+      "label": "役職",
+      "value": "副課長"
+    },
+    {
+      "label": "所属",
+      "value": "山根エリア"
+    },
+    {
+      "label": "姓",
+      "value": "ぱテル"
+    },
+    {
+      "label": "名",
+      "value": "ミリンド"
+    },
+    {
+      "label": "姓(カナ)",
+      "value": "パテル"
+    },
+    {
+      "label": "名(カナ)",
+      "value": "ミリンド"
+    },
+    {
+      "label": "生年月日",
+      "value": "1991/08/07"
+    },
+    {
+      "label": "年齢",
+      "value": "33"
+    },
+    {
+      "label": "連絡先(TEL)",
+      "value": "020-1291-231"
+    },
+    {
+      "label": "連絡先(固定電話)",
+      "value": "070-904-0250"
+    },
+    {
+      "label": "Email",
+      "value": "66.milind@gmail.com"
+    },
+    {
+      "label": "確認用(Email)",
+      "value": "66.milind@gmail.com"
+    },
+    {
+      "label": "郵便番号",
+      "value": "305-0033"
+    },
+    {
+      "label": "都道府県",
+      "value": "茨城県"
+    },
+    {
+      "label": "市区町村",
+      "value": "つくば市"
+    },
+    {
+      "label": "丁目番地",
+      "value": "東新井34−6"
+    },
+    {
+      "label": "建物名（マンション、アパート）",
+      "value": "グリンパラスKOKI"
+    },
+    {
+      "label": "住所",
+      "value": "305-0033,\n茨城県, つくば市, 東新井34−6, グリンパラスKOKI"
+    },
+    {
+      "label": "Select Step",
+      "value": "Select any Step"
+    }
+  ],
+  "Production": [
+    {
+      "label": "テキストデータを入力してください Text",
+      "value": "値引額の記載は不要です"
+    },
+    {
+      "label": "番号を入力してください Number",
+      "value": "125400"
+    },
+    {
+      "label": "メールアドレスを入力してください Email",
+      "value": "milind@vebuin.com"
+    },
+    {
+      "label": "URL",
+      "value": "https://www.tanoshiijapanese.com/home/"
+    },
+    {
+      "label": "katakana",
+      "value": "ホウラキテンルヤハルシャマヒハツメチロヌハハハガワブンパダイノ"
+    },
+    {
+      "label": "Hiragana",
+      "value": "ひらがな"
+    },
+    {
+      "label": "Half width input",
+      "value": "ｶﾀｶﾊﾞ"
+    },
+    {
+      "label": "Half width katakana",
+      "value": "ｶﾀｶﾊﾞ"
+    },
+    {
+      "label": "テキスト",
+      "value": "報ら期店ルヤ春車マヒハ詰専価チロヌハ母川文ぱ第野ヤヘハサ険通城アテ退緒南こぽたド田共よかこょ徹遺ツ器販かた暮働ぴのッ赤部偉塔履弓ド。85桂ケニメ学由ヘソトミ西望ぱっつ三経モヨレ作写前のごこ朝済はにじ世真ス運映ま面水てわべ意革条宿執折ゅぞ。円ヤフ目安12矢う理表ヌカヱソ彰25約エサロモ延試じに般上対ごみ意89物いた球問ぼをすっ際協スタ子力み東上ヒワホユ予川だなさ功査リく。"
+    },
+    {
+      "label": "詳細を入力してください Details",
+      "value": "報ら期店ルヤ春車マヒハ詰専価チロヌハ母川文ぱ第野ヤヘハサ険通城アテ退緒南こぽたド田共よかこょ徹遺ツ器販かた暮働ぴのッ赤部偉塔履弓ド。85桂ケニメ学由ヘソトミ西望ぱっつ三経モヨレ作写前のごこ朝済はにじ世真ス運映ま面水てわべ意革条宿執折ゅぞ。円ヤフ目安12矢う理表ヌカヱソ彰25約エサロモ延試じに般上対ごみ意89物いた球問ぼをすっ際協スタ子力み東上ヒワホユ予川だなさ功査リく。"
+    },
+    {
+      "label": "チェックボックス",
+      "value": "Checked"
+    },
+    {
+      "label": "第一",
+      "value": "Checked"
+    },
+    {
+      "label": "チェックボックス",
+      "value": "Unchecked"
+    },
+    {
+      "label": "第二",
+      "value": "Unchecked"
+    },
+    {
+      "label": "第三",
+      "value": "Checked"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Not Selected: 第一"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Not Selected: 第二"
+    },
+    {
+      "label": "ラジオボタン",
+      "value": "Selected: 第三"
+    },
+    {
+      "label": "プルダウン",
+      "value": "第二"
+    },
+    {
+      "label": "日付",
+      "value": "2025/02/12"
+    },
+    {
+      "label": "yyyy/MM/dd hh:mm a",
+      "value": "2025/02/12 10:00 AM"
+    },
+    {
+      "label": "数値を入力",
+      "value": "125,400"
+    },
+    {
+      "label": "数値を入力",
+      "value": "100"
+    },
+    {
+      "label": "汎用データテーブル設定 - ヴェンダー　マスター",
+      "value": "6ヶ月契約"
+    },
+    {
+      "label": "社員ID",
+      "value": "100025"
+    },
+    {
+      "label": "社員名",
+      "value": "ﾊﾟﾃﾙ ﾐﾘﾝﾄﾞ"
+    },
+    {
+      "label": "役職",
+      "value": "副課長"
+    },
+    {
+      "label": "所属",
+      "value": "山根エリア"
+    },
+    {
+      "label": "姓",
+      "value": "ぱテル"
+    },
+    {
+      "label": "名",
+      "value": "ミリンド"
+    },
+    {
+      "label": "姓(カナ)",
+      "value": "パテル"
+    },
+    {
+      "label": "名(カナ)",
+      "value": "ミリンド"
+    },
+    {
+      "label": "生年月日",
+      "value": "1991/08/07"
+    },
+    {
+      "label": "年齢",
+      "value": "33"
+    },
+    {
+      "label": "連絡先(TEL)",
+      "value": "020-1291-231"
+    },
+    {
+      "label": "連絡先(固定電話)",
+      "value": "070-904-0250"
+    },
+    {
+      "label": "Email",
+      "value": "66.milind@gmail.com"
+    },
+    {
+      "label": "確認用(Email)",
+      "value": "66.milind@gmail.com"
+    },
+    {
+      "label": "郵便番号",
+      "value": "305-0033"
+    },
+    {
+      "label": "都道府県",
+      "value": "茨城県"
+    },
+    {
+      "label": "市区町村",
+      "value": "つくば市"
+    },
+    {
+      "label": "丁目番地",
+      "value": "東新井34−6"
+    },
+    {
+      "label": "建物名（マンション、アパート）",
+      "value": "グリンパラスKOKI"
+    },
+    {
+      "label": "住所",
+      "value": "305-0033,\n茨城県, つくば市, 東新井34−6, グリンパラスKOKI"
+    },
+    {
+      "label": "Select Step",
+      "value": "Select any Step"
+    }
+  ]
+}

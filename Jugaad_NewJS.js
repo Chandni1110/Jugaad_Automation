@@ -112,8 +112,7 @@ async function runMainStage() {
         // ✅ Process Applications & Extract Data
         await processApplicationsAndDownloadFiles(driver, applicationNumbers);
 
-      //  console.log("📦 Main_Stage Final extracted data:", formData);
-
+       
     } catch (error) {
         console.error("❌ An error occurred:", error);
     } finally {
@@ -124,8 +123,8 @@ async function runMainStage() {
     }
 };
 
+// ✅ Process Applications & Extract Data
 async function processApplicationsAndDownloadFiles(driver, applicationNumbers) {
-    // Loop over each application number
     for (let appNumber of applicationNumbers) {
         console.log(`🔍 Searching for application: ${appNumber}`);
 
@@ -172,7 +171,6 @@ async function processApplicationsAndDownloadFiles(driver, applicationNumbers) {
         // Log the extracted data in the desired format
         console.log(`📌 Main Stage Extracted Data:  ['${appNumber}']`, valuesAndLabels);
 
-        // Removed saveFormDataToFile function call
         // Close the current tab and return to the main tab
         await driver.close();
         await driver.switchTo().window(tabs[0]);
@@ -182,6 +180,8 @@ async function processApplicationsAndDownloadFiles(driver, applicationNumbers) {
     }
 }
 
+// Run the main stage process
+//runMainStage();
 
 // ✅ Extract form data
 async function extractFormData(driver) {
@@ -293,7 +293,7 @@ async function runProduction() {
 
     try {
         await driver.manage().window().maximize();
-        await driver.get('https://main.stage-smartflow.com/m_user_login/agency/2/sign_in');
+        await driver.get('https://auth.vebuin.com/auth/realms/smartflow/protocol/openid-connect/auth?client_id=smartflow_public&redirect_uri=https%3A%2F%2Fsmartflow.vebuin.com%2Fm_user_login%2Fagency%2F3%2Fsign_in%3F_gl%3D1*sfxt29*_ga*MTEwOTI5OTUxOC4xNzE2NDMzOTk5*_ga_P9WRTHJN03*MTc0MzY5MjY4MS4xNDguMC4xNzQzNjkyNjgxLjAuMC4w&state=14bdb6a7-5a86-4c7d-8965-7ae5ae7856d4&response_mode=fragment&response_type=code&scope=openid&nonce=22b0b340-be63-4d4f-8eba-afc7c310b723&code_challenge=Uxp6unoI3hGSPje1eDqr3bFc7wRayLxnDXUwQDwovbA&code_challenge_method=S256');
         await driver.sleep(2000);
         console.log("🟢 Production Browser Launched!");
         
@@ -302,12 +302,12 @@ async function runProduction() {
         await driver.wait(until.elementLocated(By.name('username')), 10000);
         let inputField = await driver.findElement(By.name('username'));
         await inputField.clear();
-        await inputField.sendKeys('yamamoto_m@yopmail.com');
+        await inputField.sendKeys('chandni_pro_1@yopmail.com');
 
         await driver.wait(until.elementLocated(By.name('password')), 10000);
         let passwordField = await driver.findElement(By.name('password'));
         await passwordField.clear();
-        await passwordField.sendKeys('d2Ak5CMT1DNC41!');
+        await passwordField.sendKeys('123123123');
 
         await driver.findElement(By.className('submit')).click();
         await driver.wait(until.urlContains('dashboard'), 15000);
@@ -372,7 +372,7 @@ async function runProduction() {
         }
 
         // Application Numbers and Data Storage
-        let applicationNumbers = ["0155", "0156"]; // Modify as needed
+        let applicationNumbers = ["0001", "0002"]; // Modify as needed
 
         // ✅ Process Applications & Extract Data
         await processApplicationsAndDownloadFiles(driver, applicationNumbers);
